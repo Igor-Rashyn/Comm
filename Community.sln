@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.421
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3093F01A-5C5D-4698-8E67-467C08FFDC94}"
 EndProject
@@ -23,19 +23,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.API", "src\Service
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notification", "Notification", "{C593E374-11BE-45B1-86A2-2DF27F62F00C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notification.API", "src\Services\Notification\Notification.API\Notification.API.csproj", "{B4B712BE-F813-4547-8B58-C3A3B1E90AE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notification.API", "src\Services\Notification\Notification.API\Notification.API.csproj", "{B4B712BE-F813-4547-8B58-C3A3B1E90AE3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Note", "Note", "{7AC1ADD1-C549-41EC-B225-BE3B01FE6C50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Note.API", "src\Services\Note\Note.API\Note.API.csproj", "{2F2CE901-A3F5-44DA-BD7C-E73D01948C33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Note.API", "src\Services\Note\Note.API\Note.API.csproj", "{2F2CE901-A3F5-44DA-BD7C-E73D01948C33}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Comment", "Comment", "{FDAA6F65-4B90-43F1-9002-EF299B17BEE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comment.API", "src\Services\Comment\Comment.API\Comment.API.csproj", "{54441609-C287-41DB-9120-04BC1429AFD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Comment.API", "src\Services\Comment\Comment.API\Comment.API.csproj", "{54441609-C287-41DB-9120-04BC1429AFD5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task", "Task", "{5A76B8D3-865D-4DC5-BECD-4206EB35F1F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task.API", "src\Services\Task\Task.API\Task.API.csproj", "{81335663-B429-43AF-B044-1F8E6B11037E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Task.API", "src\Services\Task\Task.API\Task.API.csproj", "{81335663-B429-43AF-B044-1F8E6B11037E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{60A410EA-C4EF-4073-9817-C8E21E570B75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +93,7 @@ Global
 		{54441609-C287-41DB-9120-04BC1429AFD5} = {FDAA6F65-4B90-43F1-9002-EF299B17BEE9}
 		{5A76B8D3-865D-4DC5-BECD-4206EB35F1F0} = {609AA7E5-0CF9-489B-854B-77DAC464F83E}
 		{81335663-B429-43AF-B044-1F8E6B11037E} = {5A76B8D3-865D-4DC5-BECD-4206EB35F1F0}
+		{60A410EA-C4EF-4073-9817-C8E21E570B75} = {3093F01A-5C5D-4698-8E67-467C08FFDC94}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3F593DCF-FE25-41E0-94C3-86C8B89306AE}
