@@ -104,3 +104,44 @@ orleans.codegen.cs
 *.mdf
 *.ldf
 
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/apps/client/dist
+/apps/client/tmp
+/apps/client/out-tsc
+
+# dependencies
+/apps/client/node_modules
+
+# IDEs and editors
+/apps/client/.idea
+/apps/client/.project
+/apps/client/.classpath
+/apps/client/.c9/
+/apps/client/*.launch
+/apps/client/.settings/
+/apps/client/*.sublime-workspace
+
+# IDE - VSCode
+/apps/client/.vscode/*
+/apps/client/!.vscode/settings.json
+/apps/client/!.vscode/tasks.json
+/apps/client/!.vscode/launch.json
+/apps/client/!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+/apps/client/npm-debug.log
+/apps/client/yarn-error.log
+/apps/client/testem.log
+/apps/client/typings
+
+# System Files
+/apps/client/.DS_Store
+/apps/client/Thumbs.db
+
