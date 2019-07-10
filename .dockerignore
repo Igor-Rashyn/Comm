@@ -7,8 +7,12 @@
 **/*.*proj.user
 **/azds.yaml
 **/charts
-**/bin
-**/obj
+**/bin/
+**/obj/
+**/node_modules/
+**/bower_components/
+**/wwwroot/lib/*
+global.json
 **/Dockerfile
 **/Dockerfile.develop
 **/docker-compose.yml
@@ -18,3 +22,9 @@
 **/secrets.dev.yaml
 **/values.dev.yaml
 **/.toolstarget
+docker-compose*.yml
+docker-compose.dcproj
+*.sln
+*.md
+packages/
+csproj-files/
