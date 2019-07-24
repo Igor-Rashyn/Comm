@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Effect, Actions, createEffect, ofType } from '@ngrx/effects';
-import { DataPersistence } from '@nrwl/angular';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Router } from '@angular/router';
 
 import * as AuthActions from './auth.actions';

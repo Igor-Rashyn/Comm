@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { AUTH_FEATURE_KEY, AuthState, Auth } from './auth.reducer';
+import { AUTH_FEATURE_KEY, Auth } from './auth.reducer';
 
 // Lookup the 'Auth' feature state managed by NgRx
 export const getAuth = createFeatureSelector<Auth>(AUTH_FEATURE_KEY);
