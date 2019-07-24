@@ -16,7 +16,13 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@community/project": ["libs/project/src/index.ts"]
+      "@community/*": ["libs/*"],
+      "default/*": ["apps/community/src/app/*"],
+      "@community/project": ["libs/project/src/index.ts"],
+      "@community/home": ["libs/home/src/index.ts"],
+      "@community/api": ["libs/api/src/index.ts"],
+      "@env/*": ["apps/community/src/environments/*"],
+      "@community/auth": ["libs/auth/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

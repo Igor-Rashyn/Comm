@@ -12,10 +12,19 @@
       "tags": []
     },
     "community": {
-      "tags": []
+      "tags": ["community"]
     },
     "project": {
-      "tags": []
+      "tags": ["project"]
+    },
+    "home": {
+      "tags": ["home"]
+    },
+    "api": {
+      "tags": ["api"]
+    },
+    "auth": {
+      "tags": ["auth"]
     }
   }
 }
