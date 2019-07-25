@@ -25,6 +25,15 @@
     },
     "auth": {
       "tags": ["auth"]
+    },
+    "ngrx-error": {
+      "tags": []
+    },
+    "ngrx-router": {
+      "tags": []
+    },
+    "ngrx-forms": {
+      "tags": []
     }
   }
 }

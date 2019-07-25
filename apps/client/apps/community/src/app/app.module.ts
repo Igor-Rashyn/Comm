@@ -1,3 +1,7 @@
+import { NgrxErrorModule } from '@community/ngrx-error';
+import { NgrxRouterModule } from '@community/ngrx-router';
+import { AuthModule } from '@community/auth';
+import { ApiModule } from '@community/api';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { NxModule } from '@nrwl/angular';
@@ -11,18 +15,19 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 
 @NgModule({
-  declarations: [AppComponent], //FooterComponent, NavbarComponent
   imports: [
-    ApiModule, //TODO:
-    AuthModule, //TODO:
+    ApiModule,
+    AuthModule,
     BrowserModule,
-    NxModule.forRoot(), //TODO: read what it is
+    NxModule.forRoot(),
     RouterModule.forRoot(
       [
         {
           path: '',
           loadChildren: () =>
-            import('community/home/src/home.module').then(m => m.HomeModule)
+            import('@community/home/src/lib/home.module').then(
+              m => m.HomeModule
+            )
         }
         // Project
         //
@@ -30,7 +35,7 @@ import { AppComponent } from './app.component';
       ],
       {
         initialNavigation: 'enabled', //TODO: read what it is
-        useHash: true //TODO: read what it is
+        useHash: true
       }
     ),
     StoreModule.forRoot(
@@ -39,10 +44,10 @@ import { AppComponent } from './app.component';
     ), //TODO: read what it is
     EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    NgrxRouterModule, //TODO: read what it is
-    NgrxErrorModule //TODO: read what it is
+    NgrxRouterModule,
+    NgrxErrorModule
   ],
-  // providers: [],
+  declarations: [AppComponent], //FooterComponent, NavbarComponent
   bootstrap: [AppComponent]
 })
 export class AppModule {}

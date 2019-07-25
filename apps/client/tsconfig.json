@@ -22,7 +22,10 @@
       "@community/home": ["libs/home/src/index.ts"],
       "@community/api": ["libs/api/src/index.ts"],
       "@env/*": ["apps/community/src/environments/*"],
-      "@community/auth": ["libs/auth/src/index.ts"]
+      "@community/auth": ["libs/auth/src/index.ts"],
+      "@community/ngrx-error": ["libs/ngrx-error/src/index.ts"],
+      "@community/ngrx-router": ["libs/ngrx-router/src/index.ts"],
+      "@community/ngrx-forms": ["libs/ngrx-forms/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
