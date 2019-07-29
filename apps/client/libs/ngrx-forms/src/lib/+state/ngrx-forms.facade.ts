@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import * as FormActions from './ngrx-forms.actions';
-import { NgrxFormsState } from './ngrx-forms.interfaces';
+import { NgrxFormsState, Errors } from './ngrx-forms.interfaces';
 import { ngrxFormsQuery } from './ngrx-forms.selectors';
 
 @Injectable()
@@ -20,6 +20,10 @@ export class NgrxFormsFacade {
 
   setData(data: any) {
     this.store.dispatch(FormActions.setData(data));
+  }
+
+  setErrors(data: Errors) {
+    this.store.dispatch(FormActions.setErrors({ payload: data }));
   }
 
   updateData(data: any) {
