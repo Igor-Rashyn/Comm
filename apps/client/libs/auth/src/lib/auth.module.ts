@@ -1,33 +1,27 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { RouterModule } from '@angular/router';
+import { NgrxFormsModule } from '@community/ngrx-forms';
 
 import * as fromAuth from './+state/auth.reducer';
 import { AuthEffects } from './+state/auth.effects';
 import { AuthService } from './auth.service';
 import { AuthGuardService } from './auth-guard.service';
-import { TokenInterceptorService } from './token-interceptor.service';
+import { AuthInterceptorService } from './auth.interceptor.service';
 import { LoginComponent } from './login/login.component';
-
-const authRouting: ModuleWithProviders = RouterModule.forChild([
-  {
-    path: 'login',
-    component: LoginComponent //TODO:
-  },
-  {
-    path: 'register',
-    component: RegisterComponent //TODO:
-  }
-]);
+import { AuthRoutingModule } from './auth-routing.module';
+import { AuthFacade } from './+state/auth.facade';
+import { LocalStorageJwtService } from './local-storage-jwt.service';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    NgrxFormsModule, //TODO:
-    authRouting,
-    StoreModule.forFeature(fromAuth.AUTH_FEATURE_KEY, fromAuth.reducer, {
+    AuthRoutingModule,
+    NgrxFormsModule,
+    StoreModule.forFeature(fromAuth.AUTH_FEATURE_KEY, fromAuth.authReducer, {
       initialState: fromAuth.initialState
     }),
     EffectsModule.forFeature([AuthEffects])
@@ -36,10 +30,15 @@ const authRouting: ModuleWithProviders = RouterModule.forChild([
     AuthEffects,
     AuthGuardService,
     AuthService,
-    AuthFacade, //TODO:
-    TokenInterceptorService,
-    LocalStorageJwtService
+    AuthFacade,
+    AuthInterceptorService,
+    LocalStorageJwtService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    }
   ],
-  declarations: [LoginComponent]
+  declarations: [LoginComponent, RegisterComponent]
 })
 export class AuthModule {}

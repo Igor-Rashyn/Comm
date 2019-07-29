@@ -7,7 +7,7 @@ import { LocalStorageJwtService } from './local-storage-jwt.service';
 @Injectable({
   providedIn: 'root' //TODO:
 })
-export class TokenInterceptorService {
+export class AuthInterceptorService {
   constructor(private localStorage: LocalStorageJwtService) {}
 
   intercept(
