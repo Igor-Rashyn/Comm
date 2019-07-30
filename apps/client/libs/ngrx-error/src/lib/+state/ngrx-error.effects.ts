@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import * as NgrxErrorActions from './ngrx-error.actions';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class NgrxErrorEffects {
@@ -20,5 +20,5 @@ export class NgrxErrorEffects {
     )
   );
 
-  constructor(private actions$: Actions) {}
+  constructor(private actions$: Actions) { }
 }

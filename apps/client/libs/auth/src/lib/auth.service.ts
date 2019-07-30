@@ -7,7 +7,7 @@ import { map, shareReplay } from 'rxjs/operators';
   providedIn: 'root' //TODO: maybe to delete
 })
 export class AuthService {
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService) { }
 
   user(): Observable<{ user: User }> {
     return this.apiService.get('/user');
@@ -15,7 +15,7 @@ export class AuthService {
 
   login(credentials: { email: string; password: string }): Observable<User> {
     return this.apiService.post('/users/login', { user: credentials }).pipe(
-      shareReplay(), //TODO: check
+      // shareReplay(), //TODO: check
       map(r => r.user)
     );
   }

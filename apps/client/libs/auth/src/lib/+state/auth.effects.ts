@@ -50,10 +50,10 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.loginSuccess, AuthActions.registerSuccess),
       tap(action => {
-        this.localStorageJwtService.set({
-          idToken: action.user.token,
-          expiresIn: action.user.token //TODO: expires
-        });
+        this.localStorageJwtService.set(
+          action.user.token
+          // expiresIn: action.user.token //TODO: expires
+        );
         this.router.navigateByUrl('/');
       })
     )
@@ -90,5 +90,5 @@ export class AuthEffects {
     private authService: AuthService,
     private router: Router,
     private ngrxFormsFacade: NgrxFormsFacade
-  ) {}
+  ) { }
 }

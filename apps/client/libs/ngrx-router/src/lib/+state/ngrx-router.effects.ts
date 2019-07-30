@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -35,5 +35,5 @@ export class NgrxRouterEffects {
     private actions$: Actions,
     private router: Router,
     private location: Location
-  ) {}
+  ) { }
 }

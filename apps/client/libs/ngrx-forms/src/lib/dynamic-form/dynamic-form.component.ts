@@ -30,10 +30,10 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   @Input() data$: Observable<any>;
   @Input() touchedForm$: Observable<boolean>;
   @Output() updateForm: EventEmitter<any> = new EventEmitter(); //TODO:
-  unsubscribe$: Subject<void> = new Subject();
+  unsubscribe$: Subject<void> = new Subject(); //TODO:
   form: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
     this.structure$
@@ -41,8 +41,8 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
         map(this.formBuilder),
         tap(f => (this.form = f)),
         tap(f => this.listenFormChanges(f)),
-        combineLatest(this.data$),
-        takeUntil(this.unsubscribe$)
+        combineLatest(this.data$), //TODO:
+        takeUntil(this.unsubscribe$) //TODO:
       )
       .subscribe(this.patchValue);
 

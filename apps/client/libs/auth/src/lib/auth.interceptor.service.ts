@@ -8,7 +8,7 @@ import { LocalStorageJwtService } from './local-storage-jwt.service';
   providedIn: 'root' //TODO:
 })
 export class AuthInterceptorService {
-  constructor(private localStorage: LocalStorageJwtService) {}
+  constructor(private localStorage: LocalStorageJwtService) { }
 
   intercept(
     request: HttpRequest<any>,
