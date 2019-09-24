@@ -7,9 +7,11 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { NxModule } from '@nrwl/angular';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { storeFreeze } from 'ngrx-store-freeze';
+import { MaterialModule } from './modules/material.module';
 
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
@@ -24,13 +26,13 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
     NxModule.forRoot(),
     RouterModule.forRoot(
       [
-        // {
-        //   path: '',
-        //   loadChildren: () =>
-        //     import('@community/home/src/lib/home.module').then(
-        //       m => m.HomeModule
-        //     )
-        // }
+        {
+          path: '',
+          loadChildren: () =>
+            import('@community/home/src/lib/home.module').then(
+              m => m.HomeModule
+            )
+        }
         // Project
         //
         // Settings
@@ -46,8 +48,10 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
     ), //TODO: read what it is
     EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
+    BrowserAnimationsModule,
     NgrxRouterModule,
-    NgrxErrorModule
+    NgrxErrorModule,
+    MaterialModule
   ],
   declarations: [AppComponent, FooterComponent, NavbarComponent],
   bootstrap: [AppComponent]
@@ -60,6 +64,8 @@ export class AppModule {}
 // https://www.newzealandinvestmentnetwork.co.nz/
 // https://www.kickstarter.com/
 // https://www.patreon.com/
+//https://slack.com/intl/en-nz/
+//https://evernote.com/
 
 // structure
 //  home page
@@ -84,3 +90,29 @@ export class AppModule {}
 //chat
 //news from sub
 
+
+
+//project or people list 
+//https://tympanus.net/codrops/2018/02/23/freebie-dropcast-website-template-html-sketch/
+//https://tympanus.net/codrops/2018/05/23/grid-layout-with-motion-hover/
+//mayby for button
+//https://tympanus.net/codrops/2018/04/25/particle-effects-for-buttons/
+
+//some small effects for like or search https://tympanus.net/codrops/2018/05/02/ideas-for-proximity-feedback-with-progressive-hover-effects/
+
+// slide https://tympanus.net/codrops/2018/08/01/slide-box-menu/
+
+//https://tympanus.net/codrops/2018/01/10/decorative-letter-animations/
+
+// menu animation https://tympanus.net/codrops/2017/10/17/dynamic-shape-overlays-with-svg/
+//https://tympanus.net/codrops/2017/08/01/inspiration-for-menu-hover-effects/
+//https://tympanus.net/Development/LineMenuStyles/
+//https://tympanus.net/Development/TextInputEffects/
+//https://tympanus.net/Development/ButtonStylesInspiration/
+//https://tympanus.net/Development/CreativeButtons/
+//https://tympanus.net/Development/ProgressButtonStyles/
+//https://tympanus.net/Development/CreativeLinkEffects/
+
+//https://tympanus.net/Development/TooltipAnimations/
+
+//https://tympanus.net/codrops/2017/06/07/some-letter-effects-and-interaction-ideas/

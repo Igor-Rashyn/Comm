@@ -1,3 +1,8 @@
 <app-navbar [isLoggedIn]="isLoggedIn$ | async" [user]="user$ | async"></app-navbar>
-<router-outlet></router-outlet>
-<app-footer></app-footer>
+<mat-sidenav-container autosize>
+  <mat-sidenav-content>
+    <div id="navigation-offset" style="height: 64px"></div>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<app-footer></app-footer> 

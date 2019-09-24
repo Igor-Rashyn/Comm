@@ -1,10 +1,10 @@
-<nav class="navbar navbar-light">
+<!--<nav class="navbar navbar-light">
 	<div class="container">
 		<a class="navbar-brand" routerLink="/">conduit</a>
-		<!-- Logged out user -->
+
 		<ul *ngIf="!isLoggedIn" class="nav navbar-nav pull-xs-right">
 			<li class="nav-item">
-				<!-- Add "active" class when you're on that page" -->
+
 				<a class="nav-link" routerLink="/">Home</a>
 			</li>
 			<li class="nav-item">
@@ -15,10 +15,10 @@
 			</li>
 		</ul>
 
-		<!-- Logged in user -->
+
 		<ul *ngIf="isLoggedIn" class="nav navbar-nav pull-xs-right">
 			<li class="nav-item">
-				<!-- Add "active" class when you're on that page" -->
+
 				<a class="nav-link active" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
 			</li>
 			<li class="nav-item">
@@ -38,4 +38,14 @@
 			</li>
 		</ul>
 	</div>
-</nav>
+</nav> -->
+
+<mat-toolbar color="primary" class="navbar">
+    <mat-toolbar-row>
+      <a class="navbar-brand" routerLink="/">com.unity</a>
+      <div>
+        <a mat-button [routerLink]="'/accounts'" class="navbar-link"> Create a project </a>
+      </div>
+      <div class="navbar-login">Log in</div>
+    </mat-toolbar-row>
+  </mat-toolbar>
