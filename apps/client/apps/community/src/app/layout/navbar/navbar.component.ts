@@ -4,7 +4,7 @@ import { User } from '@community/api';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
+  styleUrls: ['./navbar.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavbarComponent {

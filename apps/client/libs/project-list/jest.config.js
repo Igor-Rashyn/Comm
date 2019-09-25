@@ -1,0 +1,9 @@
+module.exports = {
+  name: 'project-list',
+  preset: '../../jest.config.js',
+  coverageDirectory: '../../coverage/libs/project-list',
+  snapshotSerializers: [
+    'jest-preset-angular/AngularSnapshotSerializer.js',
+    'jest-preset-angular/HTMLCommentSerializer.js'
+  ]
+};

@@ -59,6 +59,7 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
 export class AppModule {}
 
 //https://github.com/stefanoslig/angular-ngrx-nx-realworld-example-app/blob/master/apps/conduit/src/app/app.module.ts
+//https://conduit-af252.firebaseapp.com/#/
 //https://www.talaka.org/
 //https://www.indiegogo.com/
 // https://www.newzealandinvestmentnetwork.co.nz/
@@ -93,10 +94,16 @@ export class AppModule {}
 
 
 //project or people list 
+//https://tympanus.net/Development/PricingTablesInspiration/
 //https://tympanus.net/codrops/2018/02/23/freebie-dropcast-website-template-html-sketch/
 //https://tympanus.net/codrops/2018/05/23/grid-layout-with-motion-hover/
+//https://tympanus.net/Tutorials/ShapeHoverEffectSVG/index3.html
+//https://tympanus.net/Development/NavigationIndicators/
+//https://tympanus.net/Development/DotNavigationStyles/
+//https://tympanus.net/Development/ArrowNavigationStyles/
 //mayby for button
 //https://tympanus.net/codrops/2018/04/25/particle-effects-for-buttons/
+//https://tympanus.net/Tutorials/AnimatedMenuIcon/
 
 //some small effects for like or search https://tympanus.net/codrops/2018/05/02/ideas-for-proximity-feedback-with-progressive-hover-effects/
 
@@ -112,7 +119,28 @@ export class AppModule {}
 //https://tympanus.net/Development/CreativeButtons/
 //https://tympanus.net/Development/ProgressButtonStyles/
 //https://tympanus.net/Development/CreativeLinkEffects/
+//https://tympanus.net/Development/DistortedButtonEffects/
+//https://tympanus.net/Development/Animocons/
+//https://tympanus.net/Development/AnimatedSVGIcons/
+// /https://tympanus.net/Development/AnimatedCheckboxes/
+//https://tympanus.net/Tutorials/AnimatedBorderMenus/index.html
+
 
 //https://tympanus.net/Development/TooltipAnimations/
 
 //https://tympanus.net/codrops/2017/06/07/some-letter-effects-and-interaction-ideas/
+
+// notification
+//https://tympanus.net/Development/NotificationStyles/bar-slidetop.html
+
+//https://tympanus.net/Development/RainEffect/#slide-4
+//https://tympanus.net/Tutorials/CircularProgressButton/
+//https://tympanus.net/Development/ResponsiveMultiLevelMenu/index5.html
+//https://tympanus.net/Development/SimpleDropDownEffects/index3.html
+// /https://tympanus.net/Tutorials/SVGRipples/index.html
+
+//web examples
+//https://dribbble.com/shots/7193352/attachments/192093?mode=media
+//https://dribbble.com/shots/7193574-Dribbble-Shot-HD/attachments/192347?mode=media
+//https://dribbble.com/shots/7199067--Promotion-of-social-media
+//https://dribbble.com/shots/7195135-Shecluded-A-Female-Inclusive-Loan-Company
