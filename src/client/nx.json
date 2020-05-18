@@ -1,0 +1,43 @@
+{
+  "npmScope": "community",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "community-e2e": {
+      "tags": [],
+      "implicitDependencies": ["community"]
+    },
+    "community": {
+      "tags": []
+    },
+    "project": {
+      "tags": ["project"]
+    },
+    "home": {
+      "tags": ["home"]
+    },
+    "api": {
+      "tags": ["api"]
+    },
+    "auth": {
+      "tags": ["auth"]
+    },
+    "ngrx-error": {
+      "tags": []
+    },
+    "ngrx-router": {
+      "tags": []
+    },
+    "ngrx-forms": {
+      "tags": []
+    },
+    "project-list": {
+      "tags": []
+    }
+  }
+}

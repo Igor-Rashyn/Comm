@@ -1,0 +1,8 @@
+<community-navbar [isLoggedIn]="isLoggedIn$ | async" [user]="user$ | async"></community-navbar>
+<mat-sidenav-container autosize>
+  <mat-sidenav-content>
+    <div id="navigation-offset" style="height: 64px"></div>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<community-footer></community-footer> 
