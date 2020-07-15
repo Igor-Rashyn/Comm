@@ -20,6 +20,8 @@ namespace Auth.API.Data
             var clientUrls = new Dictionary<string, string>();
 
             clientUrls.Add("ProjectApi", configuration.GetValue<string>("ProjectApiClient"));
+            //clientUrls.Add("CommentApi", configuration.GetValue<string>("CommentApiClient"));
+            //clientUrls.Add("NotificationApi", configuration.GetValue<string>("NotificationApiClient"));
 
             if (!context.Clients.Any())
             {

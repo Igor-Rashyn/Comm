@@ -7,11 +7,13 @@ using IdentityServer4.Models;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -49,7 +51,7 @@ namespace Auth.API.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginInputModel model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +83,7 @@ namespace Auth.API.Controllers
                         return Redirect(model.ReturnUrl);
                     }
 
-                    return Redirect("~");
+                    return Redirect("~/");
                 }
                 ModelState.AddModelError("", "Invalid username or password");
             }
@@ -92,36 +94,7 @@ namespace Auth.API.Controllers
         }
 
         /// <summary>
-        /// Show logout page
-        /// </summary>
-        [HttpGet]
-        public async Task<IActionResult> Logout(string logoutId)
-        {
-            if (User.Identity.IsAuthenticated == false)
-            {
-                // if the user is not authenticated, then just show logged out page
-                return await Logout(new LogoutViewModel { LogoutId = logoutId });
-            }
-
-            //Test for Xamarin. 
-            var context = await _interaction.GetLogoutContextAsync(logoutId);
-            if (context?.ShowSignoutPrompt == false)
-            {
-                //it's safe to automatically sign-out
-                return await Logout(new LogoutViewModel { LogoutId = logoutId });
-            }
-
-            // show the logout prompt. this prevents attacks where the user
-            // is automatically signed out by another malicious web page.
-            var vm = new LogoutViewModel
-            {
-                LogoutId = logoutId
-            };
-            return Ok(vm);
-        }
-
-        /// <summary>
-        /// Handle logout page postback
+        /// Handle logout
         /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -171,7 +144,52 @@ namespace Auth.API.Controllers
         }
 
 
-        private async Task<LoginInputModel> BuildLoginViewModelAsync(string returnUrl, AuthorizationRequest context)
+        // POST: /Account/Register
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    City = model.User.City,
+                    Country = model.User.Country,
+                    LastName = model.User.LastName,
+                    Name = model.User.Name,
+                    Street = model.User.Street,
+                    State = model.User.State,
+                    ZipCode = model.User.ZipCode,
+                    PhoneNumber = model.User.PhoneNumber,
+                };
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (result.Errors.Count() > 0)
+                {
+                    AddErrors(result);
+                    // If we got this far, something failed, redisplay form
+                    return Ok(model);
+                }
+            }
+
+            if (returnUrl != null)
+            {
+                if (HttpContext.User.Identity.IsAuthenticated)
+                    return Redirect(returnUrl);
+                else
+                    if (ModelState.IsValid)
+                    return RedirectToAction("login", "account", new { returnUrl = returnUrl });
+                else
+                    return Ok(model);
+            }
+
+            return RedirectToAction("index", "home");
+        }
+
+
+        private async Task<LoginViewModel> BuildLoginViewModelAsync(string returnUrl, AuthorizationRequest context)
         {
             var allowLocal = true;
             if (context?.ClientId != null)
@@ -183,20 +201,28 @@ namespace Auth.API.Controllers
                 }
             }
 
-            return new LoginInputModel
+            return new LoginViewModel
             {
                 ReturnUrl = returnUrl,
                 Email = context?.LoginHint,
             };
         }
 
-        private async Task<LoginInputModel> BuildLoginViewModelAsync(LoginInputModel model)
+        private async Task<LoginViewModel> BuildLoginViewModelAsync(LoginViewModel model)
         {
             var context = await _interaction.GetAuthorizationContextAsync(model.ReturnUrl);
             var vm = await BuildLoginViewModelAsync(model.ReturnUrl, context);
             vm.Email = model.Email;
             vm.RememberMe = model.RememberMe;
             return vm;
+        }
+
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
         }
     }
 }

@@ -29,10 +29,7 @@ namespace Auth.API.Data
 
                 if (!context.Users.Any())
                 {
-                    context.Users.AddRange(useCustomizationData
-                        ? GetUsersFromFile(contentRootPath, logger)
-                        : GetDefaultUser());
-
+                    context.Users.AddRange(GetDefaultUser());
                     await context.SaveChangesAsync();
                 }
             }
@@ -70,94 +67,6 @@ namespace Auth.API.Data
             user.PasswordHash = _passwordHasher.HashPassword(user, "Pass@word1");
 
             return new List<ApplicationUser>() { user };
-        }
-
-        private IEnumerable<ApplicationUser> GetUsersFromFile(string contentRootPath, ILogger logger)
-        {
-            string csvFileUsers = Path.Combine(contentRootPath, "Setup", "Users.csv");
-
-            if (!File.Exists(csvFileUsers))
-            {
-                return GetDefaultUser();
-            }
-
-            string[] csvheaders;
-
-            try
-            {
-                string[] requiredHeaders = {
-                     "city", "country", "email", "lastname", "name",
-                     "phonenumber", "username", "zipcode", "state", "street",
-                     "normalizedemail", "normalizedusername", "password"
-                };
-
-                csvheaders = GetHeaders(requiredHeaders, csvFileUsers);
-
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "EXCEPTION ERROR: {Message}", ex.Message);
-                return GetDefaultUser();
-            }
-
-            List<ApplicationUser> users = File.ReadAllLines(csvFileUsers)
-                .Skip(1)
-                .Select(row => Regex.Split(row, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"))
-                .SelectTry(column => CreateApplicationUser(column, csvheaders))
-                .OnCaughtException(ex => { logger.LogError(ex, "EXCEPTION ERROR: {Message}", ex.Message); return null; })
-                .Where(x => x != null)
-                .ToList();
-
-            return users;
-        }
-
-        private ApplicationUser CreateApplicationUser(string[] column, string[] headers)
-        {
-            if(column.Count() != headers.Count())
-            {
-                throw new Exception($"column count '{column.Count()}' not the same as headers count '{headers.Count()}'");
-            }
-
-            var user = new ApplicationUser
-            {
-                City = column[Array.IndexOf(headers, "city")].Trim('"').Trim(),
-                Country = column[Array.IndexOf(headers, "country")].Trim('"').Trim(),
-                Email = column[Array.IndexOf(headers, "email")].Trim('"').Trim(),
-                Id = Guid.NewGuid().ToString(),
-                LastName = column[Array.IndexOf(headers, "lastname")].Trim('"').Trim(),
-                Name = column[Array.IndexOf(headers, "name")].Trim('"').Trim(),
-                PhoneNumber = column[Array.IndexOf(headers, "phonenumber")].Trim('"').Trim(),
-                UserName = column[Array.IndexOf(headers, "username")].Trim('"').Trim(),
-                ZipCode = column[Array.IndexOf(headers, "zipcode")].Trim('"').Trim(),
-                State = column[Array.IndexOf(headers, "state")].Trim('"').Trim(),
-                Street = column[Array.IndexOf(headers, "street")].Trim('"').Trim(),
-                NormalizedEmail = column[Array.IndexOf(headers, "normalizedemail")].Trim('"').Trim(),
-                NormalizedUserName = column[Array.IndexOf(headers, "normalizedusername")].Trim('"').Trim(),
-                SecurityStamp = Guid.NewGuid().ToString("D"),
-                PasswordHash = column[Array.IndexOf(headers, "password")].Trim('"').Trim()
-            };
-
-            return user;
-        }
-
-        private string[] GetHeaders(string[] requiredHeaders, string csvFileUsers)
-        {
-            string[] csvHeaders = File.ReadLines(csvFileUsers).First().ToLowerInvariant().Split(',');
-
-            if(csvHeaders.Count() != requiredHeaders.Count())
-            {
-                throw new Exception($"requiredHeader count '{ requiredHeaders.Count() }' is different then read header '{csvHeaders.Count()}'");
-            }
-
-            foreach(var requiredHeader in requiredHeaders)
-            {
-                if (!csvHeaders.Contains(requiredHeader))
-                {
-                    throw new Exception($"does not contain required header '{requiredHeader}'");
-                }
-            }
-
-            return csvHeaders;
         }
     }
 }

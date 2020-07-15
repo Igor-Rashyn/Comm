@@ -37,13 +37,21 @@ namespace Auth.API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration.GetConnectionString("Default");
+            //services.Configure<ForwardedHeadersOptions>(options =>
+            //{
+            //options.ForwardLimit = 2;
+            //options.KnownProxies.Add(IPAddress.Parse("127.0.10.1"));
+            //options.ForwardedForHeaderName = "X-Forwarded-For-My-Custom-Header-Name";
+            //    options.ForwardedHeaders =
+            //        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            //});
+
+            //RegisterAppInsights(services);
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString,
+                options.UseSqlServer(Configuration["ConnectionStrings"],
                    sqlServerOptionsAction: sqlOptions =>
                    {
                        sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
@@ -57,40 +65,39 @@ namespace Auth.API
 
             services.Configure<AppSettings>(Configuration);
 
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
+            //TODO: READ
             if (Configuration.GetValue<string>("IsClusterEnv") == bool.TrueString)
             {
                 services.AddDataProtection(opts =>
-                    {
-                        opts.ApplicationDiscriminator = "community.auth";
-                    })
-                    .PersistKeysToStackExchangeRedis(ConnectionMultiplexer.Connect(Configuration["DPConnectionString"]), "DataProtection-Keys");
+                {
+                    opts.ApplicationDiscriminator = "community.auth";
+                })
+                .PersistKeysToStackExchangeRedis(ConnectionMultiplexer.Connect(Configuration["DPConnectionString"]), "DataProtection-Keys");
             }
 
             services.AddHealthChecks()
                 .AddCheck("self", () => HealthCheckResult.Healthy())
-                .AddSqlServer(connectionString,
+                .AddSqlServer(Configuration["ConnectionStrings"],
                     name: "AuthDB-check",
                     tags: new string[] { "AuthDB" });
 
             services.AddTransient<ILoginService<ApplicationUser>, EFLoginService>();
             services.AddTransient<IRedirectService, RedirectService>();
 
-            
+            var connectionString = Configuration["ConnectionString"];
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
 
             services.AddIdentityServer(x =>
                 {
                     x.IssuerUri = "null";
                     x.Authentication.CookieLifetime = TimeSpan.FromHours(2);
                 })
-                .AddDeveloperSigningCredential()
+                //.AddDeveloperSigningCredential() //TODO: READ!
                 .AddDevspacesIfNeeded(Configuration.GetValue("EnableDevspaces", false))
-               //.AddSigningCredential(Certificate.Get())
+               //.AddSigningCredential(Certificate.Get()) //TODO: MAYBE ADD LATER
                .AddAspNetIdentity<ApplicationUser>()
-               .AddConfigurationStore(options =>
+               .AddConfigurationStore(options => //TODo:READ
                {
                    options.ConfigureDbContext = builder => builder.UseSqlServer(connectionString,
                        sqlServerOptionsAction: sqlOptions =>
@@ -100,7 +107,7 @@ namespace Auth.API
                            sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
                        });
                })
-               .AddOperationalStore(options =>
+               .AddOperationalStore(options => //TODo:READ
                {
                    options.ConfigureDbContext = builder => builder.UseSqlServer(connectionString,
                         sqlServerOptionsAction: sqlOptions =>
@@ -112,13 +119,16 @@ namespace Auth.API
                })
                .Services.AddTransient<IProfileService, ProfileService>();
 
+            services.AddControllers();
+            //services.AddControllersWithViews();
+            //services.AddRazorPages();
+
             var container = new ContainerBuilder();
             container.Populate(services);
 
             return new AutofacServiceProvider(container.Build());
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             //loggerFactory.AddConsole(Configuration.GetSection("Logging"));
@@ -126,6 +136,7 @@ namespace Auth.API
             //loggerFactory.AddAzureWebAppDiagnostics();
             //loggerFactory.AddApplicationInsights(app.ApplicationServices, LogLevel.Trace);
 
+      
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -135,9 +146,8 @@ namespace Auth.API
             {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                //app.UseHsts();
             }
-
 
             var pathBase = Configuration["PATH_BASE"];
 
@@ -146,30 +156,46 @@ namespace Auth.API
                 loggerFactory.CreateLogger<Startup>().LogDebug("Using PATH BASE '{pathBase}'", pathBase);
                 app.UsePathBase(pathBase);
             }
-
-            app.UseHealthChecks("/hc", new HealthCheckOptions()
+            //https://www.sitepoint.com/improving-web-security-with-the-content-security-policy/
+            app.Use(async (context, next) =>
             {
-                Predicate = _ => true,
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                context.Response.Headers.Add("Content-Security-Policy", "script-src 'unsafe-inline'");
+                await next();
             });
 
-            app.UseHealthChecks("/liveness", new HealthCheckOptions
-            {
-                Predicate = r => r.Name.Contains("self")
-            });
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseForwardedHeaders();
+            // UseForwardedHeaders has to be called before all middleware. before .UseHsts()
+            app.UseForwardedHeaders(); // to forward the X-Forwarded-For and X-Forwarded-Proto headers . By convention, proxies forward information in HTTP headers.
             app.UseIdentityServer();
+            app.UseStaticFiles();
+            //it only affects downstream components registered in the pipeline.
+            app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Lax }); 
+            app.UseRouting();
+            //app.UseAuthorization();
+            
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapDefaultControllerRoute();
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/hc", new HealthCheckOptions
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
+                endpoints.MapHealthChecks("/liveness", new HealthCheckOptions
+                {
+                    Predicate = r => r.Name.Contains("self")
+                });
             });
         }
+
+        //private void RegisterAppInsights(IServiceCollection services)
+        //{
+        //    services.AddApplicationInsightsTelemetry(Configuration);
+        //    services.AddApplicationInsightsKubernetesEnricher();
+        //}
     }
 }
+
+
+//TODO: for nginx https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-3.1#configure-nginx
+//https://www.nginx.com/resources/wiki/start/topics/examples/forwarded/

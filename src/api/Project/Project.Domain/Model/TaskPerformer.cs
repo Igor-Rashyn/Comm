@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-namespace Task.API.Model
+namespace Project.Domain.Model
 {
     public class TaskPerformer
     {
@@ -11,7 +11,7 @@ namespace Task.API.Model
         public string FullName { get; private set; }
         public string Role { get; set; }
         public int TaskId { get; set; }
-        public Model.Task Task { get; set; }
+        public Task Task { get; set; }
         //public string UserPic { get; set; } // url
 
         public TaskPerformer(string userId, string fullName)

@@ -31,15 +31,15 @@ namespace Project.Domain.Model
         //public List<File> Files { get; set; }
         //public List<City> Cities { get; set; }
         //public List<Country> Countries { get; set; }
-        private List<ProjectTask> _tasks { get; set; }
-        public IEnumerable<ProjectTask> Tasks => _tasks.AsReadOnly();
+        private List<Task> _tasks { get; set; }
+        public IEnumerable<Task> Tasks => _tasks.AsReadOnly();
         //public List<User> Subscribers { get; set; }
         public List<Member> Team { get; set; }
         public List<Post> Posts { get; set; }
 
         protected Project()
         {
-            _tasks = new List<ProjectTask>();
+            _tasks = new List<Task>();
             _projectCategories = new List<Category>();
             Team = new List<Member>();
             Posts = new List<Post>();

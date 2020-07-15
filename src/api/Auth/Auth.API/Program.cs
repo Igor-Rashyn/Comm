@@ -25,7 +25,7 @@ namespace Auth.API
             try
             {
                 Log.Information("Web host config ({ApplicationContext})...", AppName);
-                var host = CreateHostBuilder(configuration, args);
+                var host = BuidWebHost(configuration, args);
 
                 Log.Information("Migration ({ApplicationContext})...", AppName);
 
@@ -62,12 +62,12 @@ namespace Auth.API
             }
         }
 
-        public static IWebHost CreateHostBuilder(IConfiguration configuration, string[] args) =>
+        public static IWebHost BuidWebHost(IConfiguration configuration, string[] args) =>
            WebHost.CreateDefaultBuilder(args)
                 .CaptureStartupErrors(false)
+                .ConfigureAppConfiguration(x => x.AddConfiguration(configuration))
                 .UseStartup<Startup>()
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseConfiguration(configuration)
                 .UseSerilog()
                 .Build();
 

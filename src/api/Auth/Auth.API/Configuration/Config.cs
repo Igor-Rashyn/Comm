@@ -6,12 +6,14 @@ namespace Auth.API.Configuration
 {
     public class Config
     {
-
+        //define the apis in the system
         public static IEnumerable<ApiResource> GetApis()
         {
             return new List<ApiResource>
             {
-                new ApiResource("projects", "Projects Service")
+                new ApiResource("projects", "Projects Service"),
+                new ApiResource("comments", "Comments Service"),
+                new ApiResource("notifications", "Notifications Service")
             };
         }
 
